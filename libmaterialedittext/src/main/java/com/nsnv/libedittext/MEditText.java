@@ -1,4 +1,4 @@
-package com.nsnv.mlib;
+package com.nsnv.libedittext;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
@@ -19,6 +19,8 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
+
+import com.nsnv.libedittext.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -27,7 +27,7 @@
         android:text="用户名可用"
         />
 
-    <com.nsnv.mlib.MEditText
+    <com.nsnv.libedittext.MEditText
         android:id="@+id/medt_usr"
         android:textSize="20sp"
         android:hint="请输入用户名"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"/>
 
 
-    <com.nsnv.mlib.MEditText
+    <com.nsnv.libedittext.MEditText
         android:id="@+id/medt_pwd"
         android:textSize="20sp"
         android:hint="请输入密码"
