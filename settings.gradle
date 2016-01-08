@@ -1,1 +1,1 @@
-include ':app', ':libmaterialedittext'
+include ':app', ':libedittext'

@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MaterialEditText.iml" filepath="$PROJECT_DIR$/MaterialEditText.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libmaterialedittext/libmaterialedittext.iml" filepath="$PROJECT_DIR$/libmaterialedittext/libmaterialedittext.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libedittext/libedittext.iml" filepath="$PROJECT_DIR$/libedittext/libedittext.iml" />
     </modules>
   </component>
 </project>
