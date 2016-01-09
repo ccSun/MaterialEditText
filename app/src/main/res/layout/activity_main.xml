@@ -46,4 +46,14 @@
         android:layout_height="wrap_content"/>
 
 
+    <com.nsnv.libedittext.MAutoCompleteTextView
+        android:id="@+id/auto_txt"
+        android:hint="会议室"
+        android:layout_marginLeft="5dp"
+        android:completionThreshold="1"
+        android:dropDownHeight="200dp"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

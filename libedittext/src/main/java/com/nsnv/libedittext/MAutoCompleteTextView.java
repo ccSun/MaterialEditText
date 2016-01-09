@@ -298,7 +298,7 @@ public class MAutoCompleteTextView extends AppCompatAutoCompleteTextView {
             @Override
             public void afterTextChanged(Editable s) {
                 intCharactersCount = s.length();
-                if (intCharactersCount > intMaxCount && intMaxCount>0) {
+                if (intCharactersCount > intMaxCount && intMaxCount > 0) {
                     isErrorCount = true;
                 } else {
                     isErrorCount = false;
@@ -336,11 +336,13 @@ public class MAutoCompleteTextView extends AppCompatAutoCompleteTextView {
         return super.onTouchEvent(event);
     }
 
-    @Override
-    public void setText(CharSequence text, BufferType type) {
+    public void setTextMyDef(CharSequence text){
+        this.setText(text);
         this.setHint(null);
-        super.setText(text, type);
-        setFloatingLabelSizeFraction(1f);
+        floatingLabelColorFraction = 1;
+        floatingLabelSizeFraction = 1;
+        this.invalidate();
+
     }
 
     private boolean hasClickedClearIcon(MotionEvent event) {
