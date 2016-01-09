@@ -19,7 +19,6 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
-import android.widget.AutoCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;

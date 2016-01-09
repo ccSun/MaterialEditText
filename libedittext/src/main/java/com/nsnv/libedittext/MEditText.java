@@ -20,8 +20,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 
-import com.nsnv.libedittext.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -167,7 +165,7 @@ public class MEditText extends AppCompatEditText {
         // draw clear icon
         if(isShowClearIcon){
 
-            int colorForAlpha = (int) argbEvaluator.evaluate(floatingLabelColorFraction, Color.GRAY & 0x7FFFFFFF, Color.GRAY & 0x3FFFFFFF);
+            int colorForAlpha = (int) argbEvaluator.evaluate(floatingLabelColorFraction, Color.GRAY & 0x7FFFFFFF, Color.GRAY & 0x00FFFFFF);
             paint.setColor(colorForAlpha);
             clearIconStartX = getWidth() + getScrollX() - getBitmapClearIcon().getWidth();
             clearIconStartY = startYBottomLine -  getBitmapClearIcon().getHeight() - dp2px(4);
