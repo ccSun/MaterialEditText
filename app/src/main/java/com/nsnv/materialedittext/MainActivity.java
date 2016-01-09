@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         medt_usr.setIntMaxCount(8);
         // 失去焦点后显示loading 动画
         medt_usr.setBottomLoadingEnabled(true);
+        medt_usr.setTextMyDef("HELLO");
 
         Button btn_error = (Button) findViewById(R.id.btn_error);
         btn_error.setOnClickListener(new View.OnClickListener() {

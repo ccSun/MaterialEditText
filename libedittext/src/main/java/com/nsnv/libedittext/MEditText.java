@@ -461,6 +461,15 @@ public class MEditText extends AppCompatEditText {
         return Math.round(px);
     }
 
+    public void setTextMyDef(CharSequence text){
+        this.setText(text);
+        this.setHint(null);
+        floatingLabelColorFraction = 1;
+        floatingLabelSizeFraction = 1;
+        this.invalidate();
+
+    }
+
     @Override
     public void setError(CharSequence error) {
 //        super.setError(error);
@@ -547,7 +556,10 @@ public class MEditText extends AppCompatEditText {
         listMaterialEdtCheck.add(check);
     }
 
+
+
     public interface IUserInputWordsCheck{
         abstract boolean isOk();
     }
+
 }
