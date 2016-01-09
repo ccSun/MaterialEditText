@@ -73,6 +73,7 @@ public class MAutoCompleteTextView extends AppCompatAutoCompleteTextView {
     private boolean isErrorCount = false;
 
     private int colorPrimary;
+    private int colorAccent;
 
     public MAutoCompleteTextView(Context context) {
         super(context);
@@ -118,7 +119,7 @@ public class MAutoCompleteTextView extends AppCompatAutoCompleteTextView {
         // draw bottom line
         int startYBottomLine = (int) (getHeight() - (getPaddingBottom()*0.8));
         if(BottomTextState.ErrorMsg== bottomTextState || isErrorCount){
-            paint.setColor(Color.RED);
+            paint.setColor(colorAccent);
         }else{
             if(this.length() == 0){
 
@@ -149,7 +150,7 @@ public class MAutoCompleteTextView extends AppCompatAutoCompleteTextView {
 
         }else if(BottomTextState.ErrorMsg == bottomTextState){
 
-            paint.setColor(Color.RED);
+            paint.setColor(colorAccent);
             canvas.drawText(strBottomText, startXFloatintText, startYBottomText, paint);
 
         }else if(BottomTextState.Loading == bottomTextState && isBottomLoadingEnabled){
@@ -177,8 +178,13 @@ public class MAutoCompleteTextView extends AppCompatAutoCompleteTextView {
             paint.setTextSize(hintTextSize);
             int startXTextCounter = (int) (getWidth()+ getScrollX() - paint.measureText(strCounter));
             if(isErrorCount){
-                paint.setColor(Color.RED);
+                paint.setColor(colorAccent);
             }else {
+                if(this.length() == 0){
+                    colorFloatingHint = (int) argbEvaluator.evaluate(floatingLabelSizeFraction, hintTextColor, colorPrimary);
+                }else{
+                    colorFloatingHint = (int) argbEvaluator.evaluate(floatingLabelColorFraction, colorPrimary, Color.GRAY&(0x00FFFFFF));
+                }
                 paint.setColor(colorFloatingHint);
             }
             canvas.drawText(strCounter, startXTextCounter, startYBottomText, paint);
@@ -194,26 +200,37 @@ public class MAutoCompleteTextView extends AppCompatAutoCompleteTextView {
         hintTextColor = this.getHintTextColors().getDefaultColor();
 
         colorPrimary = Color.DKGRAY;
+        colorAccent = Color.RED;
         try {
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
 
-                TypedValue colorPrimaryTypedValue = new TypedValue();
-                cxt.getTheme().resolveAttribute(android.R.attr.colorPrimary, colorPrimaryTypedValue, true);
-                colorPrimary = colorPrimaryTypedValue.data;
+                TypedValue typedValue = new TypedValue();
+                cxt.getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
+                colorPrimary = typedValue.data;
+                cxt.getTheme().resolveAttribute(android.R.attr.colorAccent, typedValue, true);
+                colorAccent = typedValue.data;
             }else {
                 throw new RuntimeException("SDK_INT is less than Lollipop.");
             }
         }catch (Exception e){
 
             try {
-                TypedValue colorPrimaryTypedValue = new TypedValue();
+                TypedValue typedValue = new TypedValue();
                 int idColorPrimary = getResources().getIdentifier("colorPrimary", "attr", cxt.getPackageName());
+                int idColorAccent = getResources().getIdentifier("colorAccent", "attr", cxt.getPackageName());
                 if(0 != idColorPrimary) {
-                    cxt.getTheme().resolveAttribute(idColorPrimary, colorPrimaryTypedValue, true);
-                    colorPrimary = colorPrimaryTypedValue.data;
+                    cxt.getTheme().resolveAttribute(idColorPrimary, typedValue, true);
+                    colorPrimary = typedValue.data;
                 }else {
                     throw new RuntimeException("colorPrimary not found");
+                }
+
+                if(0 != idColorAccent) {
+                    cxt.getTheme().resolveAttribute(idColorAccent, typedValue, true);
+                    colorAccent = typedValue.data;
+                }else {
+                    throw new RuntimeException("colorAccent not found");
                 }
             }catch (Exception e1){
                 // use default color.
@@ -480,6 +497,7 @@ public class MAutoCompleteTextView extends AppCompatAutoCompleteTextView {
      */
     public void clearBottomState(){
         bottomTextState = BottomTextState.Nothing;
+        invalidate();
     }
 
     /**
@@ -510,6 +528,32 @@ public class MAutoCompleteTextView extends AppCompatAutoCompleteTextView {
         if(null==check)
             throw new NullPointerException("IUserInputWordsCheck cant be null");
         listMaterialEdtCheck.add(check);
+    }
+
+
+    /**
+     * Check the given "check" is ok or not.
+     * @param check
+     * @return
+     */
+    public boolean isOK(IUserInputWordsCheck check){
+        if(listMaterialEdtCheck == null)
+            throw new NullPointerException("you have not add a IUserInputWordsCheck yet.");
+
+        if(null==check)
+            throw new NullPointerException("IUserInputWordsCheck cant be null");
+
+        if(!listMaterialEdtCheck.contains(check))
+            throw new NullPointerException("this check has not been registered to MEditText");
+
+        return check.isOk();
+    }
+
+    /**
+     * @return whether input character count is ok
+     */
+    public boolean isOKCountError(){
+        return isErrorCount;
     }
 
     public interface IUserInputWordsCheck{

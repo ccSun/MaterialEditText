@@ -212,6 +212,11 @@ public class MEditText extends AppCompatEditText {
             if(isErrorCount){
                 paint.setColor(colorAccent);
             }else {
+                if(this.length() == 0){
+                    colorFloatingHint = (int) argbEvaluator.evaluate(floatingLabelSizeFraction, hintTextColor, colorPrimary);
+                }else{
+                    colorFloatingHint = (int) argbEvaluator.evaluate(floatingLabelColorFraction, colorPrimary, Color.GRAY&(0x00FFFFFF));
+                }
                 paint.setColor(colorFloatingHint);
             }
             canvas.drawText(strCounter, startXTextCounter, startYBottomText, paint);
@@ -342,7 +347,7 @@ public class MEditText extends AppCompatEditText {
             @Override
             public void afterTextChanged(Editable s) {
                 intCharactersCount = s.length();
-                if (intCharactersCount > intMaxCount && intMaxCount>0) {
+                if (intCharactersCount > intMaxCount && intMaxCount > 0) {
                     isErrorCount = true;
                 } else {
                     isErrorCount = false;
@@ -524,6 +529,7 @@ public class MEditText extends AppCompatEditText {
      */
     public void clearBottomState(){
         bottomTextState = BottomTextState.Nothing;
+        invalidate();
     }
 
     /**
@@ -556,7 +562,30 @@ public class MEditText extends AppCompatEditText {
         listMaterialEdtCheck.add(check);
     }
 
+    /**
+     * Check the given "check" is ok or not.
+     * @param check
+     * @return
+     */
+    public boolean isOK(IUserInputWordsCheck check){
+        if(listMaterialEdtCheck == null)
+            throw new NullPointerException("you have not add a IUserInputWordsCheck yet.");
 
+        if(null==check)
+            throw new NullPointerException("IUserInputWordsCheck cant be null");
+
+        if(!listMaterialEdtCheck.contains(check))
+            throw new NullPointerException("this check has not been registered to MEditText");
+
+        return check.isOk();
+    }
+
+    /**
+     * @return whether input character count is ok
+     */
+    public boolean isOKCountError(){
+        return isErrorCount;
+    }
 
     public interface IUserInputWordsCheck{
         abstract boolean isOk();
